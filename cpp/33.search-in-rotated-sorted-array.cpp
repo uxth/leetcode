@@ -91,18 +91,49 @@ public:
     // }
 
 
-    int search(vector<int>& nums, int target) {
-        int left = 0, right = nums.size()-1;
-        while(left <= right)
-        {
-            if(nums[left] == target) return left;
-            if(nums[right] == target) return right;
-            int mid = (left + right) / 2;
-            if(target == nums[mid]) return mid;
-            if((nums[left] <= target && target < nums[mid]) || (nums[mid] < nums[right] && (target > nums[right] || target < nums[mid]))) right = mid - 1;
-            else left = mid + 1;
+    // int search(vector<int>& nums, int target) {
+    //     int left = 0, right = nums.size()-1;
+    //     while(left <= right)
+    //     {
+    //         if(nums[left] == target) return left;
+    //         if(nums[right] == target) return right;
+    //         int mid = (left + right) / 2;
+    //         if(target == nums[mid]) return mid;
+    //         if((nums[left] <= target && target < nums[mid])
+    //             || (nums[mid] < nums[right] && (target > nums[right] || target < nums[mid])))
+    //             right = mid - 1;
+    //         else
+    //             left = mid + 1;
+    //     }
+    //     return -1;
+    // }
+
+    int bs(vector<int>& nums, int target, int left, int right) {
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid]<target) left = mid + 1;
+            else right = mid;
         }
-        return -1;
+        return nums[left] == target ? left : -1;
+    }
+    int rs(vector<int>& nums, int target, int left, int right){
+        if(nums[right] == target) return right;
+        int mid = (right-left)/2 + left;
+        if(left == mid) return nums[mid] == target ? mid : -1;
+        if(nums[left] < nums[mid]){
+            if(nums[left]<=target && target<=nums[mid])
+                return bs(nums, target, left, mid);
+            else
+                return rs(nums, target, mid, right);
+        }else{
+            if(nums[mid]<=target && target<=nums[right])
+                return bs(nums, target, mid, right);
+            else
+                return rs(nums, target, left, mid);
+        }
+    }
+    int search(vector<int>& nums, int target) {
+        return rs(nums, target, 0, nums.size()-1);
     }
 };
 // @lc code=end
@@ -112,4 +143,4 @@ public:
 // [3,5,1]\n5
 // [4,5,6,7,8,1,2,3]\n8
 // [7,8,0,1,2]\n6
-// [4,5,6,7,0,1,2]\n3
+// [5,1,3]\n1

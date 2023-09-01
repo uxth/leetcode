@@ -58,14 +58,14 @@ public:
     int findMin(vector<int>& nums) {
         int left = 0;
         int right = nums.size()-1;
-        while(left < right-1 && nums[left] >= nums[right])
+        while(left < right)
         {
             int mid = left + (right - left) / 2;
-            if(nums[mid] > nums[right]) left = mid;
-            else if(nums[mid] < nums[left]) right = mid;
-            else left++,right--;
+            if(nums[mid] > nums[right]) left = mid + 1;
+            else if(nums[mid] < nums[right]) right = mid;
+            else right--;
         }
-        return min(nums[left], nums[right]);
+        return nums[left];
     }
 };
 // @lc code=end
