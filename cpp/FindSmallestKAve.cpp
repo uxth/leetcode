@@ -59,7 +59,7 @@ vector<double> findKSmallestAve(vector<int>& input, int K)
 int main()
 {
     vector<int> input{2,1,3};
-   for(auto i : findKSmallestAve(input, 6)) cout << i << ", ";
+    for(auto i : findKSmallestAve(input, 6)) cout << i << ", ";
    
-   return 0;
+    return 0;
 }
