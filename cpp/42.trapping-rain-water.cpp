@@ -32,25 +32,46 @@
 // @lc code=start
 class Solution {
 public:
-    int trap(vector<int>& height) {
-        if(height.empty()) return 0;
-        int res = 0;
-        int maxHeight = height[0];
-        int heightIndex = distance(height.begin(), max_element(height.begin(), height.end()));
+    // int trap(vector<int>& height) {
+    //     if(height.empty()) return 0;
+    //     int res = 0;
+    //     int maxHeight = height[0];
+    //     int heightIndex = distance(height.begin(), max_element(height.begin(), height.end()));
 
-        for(int i=1; i<heightIndex; ++i)
-        {
-            if(height[i] < maxHeight) res+=maxHeight-height[i];
-            else maxHeight = height[i];
-        }
-        maxHeight = height.back();
-        for(int i=height.size()-2; i>heightIndex; --i)
-        {
-            if(height[i] < maxHeight) res+=maxHeight-height[i];
-            else maxHeight=height[i];
+    //     for(int i=1; i<heightIndex; ++i)
+    //     {
+    //         if(height[i] < maxHeight) res+=maxHeight-height[i];
+    //         else maxHeight = height[i];
+    //     }
+    //     maxHeight = height.back();
+    //     for(int i=height.size()-2; i>heightIndex; --i)
+    //     {
+    //         if(height[i] < maxHeight) res+=maxHeight-height[i];
+    //         else maxHeight=height[i];
+    //     }
+    //     return res;
+    // }
+
+    int trap(vector<int>& height) {
+        int n = height.size();
+        int leftMax = INT_MIN;
+        int rightMax = INT_MIN;
+        int left = 0, right = n-1;
+        int res = 0;
+        while(left <= right) {
+            if(height[left] <= height[right]){
+                leftMax = max(height[left], leftMax);
+                res += leftMax - height[left];
+                left++;
+            }else{
+                rightMax = max(height[right], rightMax);
+                res += rightMax - height[right];
+                right--;
+            }
         }
         return res;
     }
+
 };
 // @lc code=end
 
