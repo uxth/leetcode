@@ -25,17 +25,13 @@ class Solution {
     //     }
     //     return res;
     // }
-
-    int n;
 public:
     int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
-        n = nums.size();
-        if(!n)
-            return 0;
         return max(getSum(nums, firstLen, secondLen), getSum(nums, secondLen, firstLen));
     }
     
     int getSum(const vector<int>&nums, int l_len, int r_len){
+        int n = nums.size();
         vector<int>left(n, 0), right(n, INT_MIN);
         int sum = 0;
         for(int i = 0;i<n;i++){
