@@ -73,8 +73,7 @@
  */
 class Solution {
 public:
-    int dfs(TreeNode* root, int& maxValue)
-    {
+    int dfs(TreeNode* root, int& maxValue){
         if(root == nullptr) return 0;
         int left = dfs(root->left, maxValue);
         int right = dfs(root->right, maxValue);
