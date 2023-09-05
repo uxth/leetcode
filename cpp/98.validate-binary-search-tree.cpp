@@ -74,10 +74,34 @@ public:
         if(root->val <= low || root->val >= high) return false;
         return isBST(root->left, low, root->val) && isBST(root->right, root->val, high);
     }
-    bool isValidBST(TreeNode* root) {
+    bool dfs(TreeNode* root){
         if(root==nullptr) return true;
         return isBST(root->left, LONG_MIN, root->val) && isBST(root->right, root->val, LONG_MAX);
+    }
+
+    bool bfs(TreeNode* root){
+        if(root == nullptr) return true;
+        stack<TreeNode*> st;
+        long pre = LONG_MIN;
+        while(root != nullptr || !st.empty()){
+            if(root){
+                st.push(root);
+                root = root->left;
+            }else{
+                root = st.top();
+                st.pop();
+                if(root->val <= pre) return false;
+                pre = root->val;
+                root = root->right;
+            }
+        }
+        return true;
+    }
+    bool isValidBST(TreeNode* root) {
+        // return dfs(root);
+        return bfs(root);
     }
 };
 // @lc code=end
 // [1,1]
+// [-2147483648]
