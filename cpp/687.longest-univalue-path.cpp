@@ -73,16 +73,25 @@
  */
 class Solution {
 public:
-    int dfs(TreeNode* root, TreeNode* pre)
+    int dfs(TreeNode* root, int& maxValue)
     {
-        if(!root || root->val != pre->val) return 0;
-        return 1 + dfs(root->left, root) + dfs(root->right, root);
+        if(root == nullptr) return 0;
+        int left = dfs(root->left, maxValue);
+        int right = dfs(root->right, maxValue);
+        int curleft = 0, curright = 0;
+        if(root->left && root->left->val == root->val)
+            curleft = left + 1;
+        if(root->right && root->right->val == root->val)
+            curright = right + 1;
+        maxValue = max(maxValue, curleft + curright);
+        return max(curleft, curright);
     }
     int longestUnivaluePath(TreeNode* root) {
         if(root == nullptr) return 0;
-        int sub = max(longestUnivaluePath(root->left), longestUnivaluePath(root->right));
-        return max(sub, dfs(root->left, root) + dfs(root->right, root));
+        int maxValue = INT_MIN;
+        dfs(root, maxValue);
+        return maxValue == INT_MIN ? 0 : maxValue;
     }
 };
 // @lc code=end
-
+// [1,null,1,1,1,1,1,1]
