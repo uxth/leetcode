@@ -57,12 +57,29 @@
  */
 class Solution {
 public:
-    TreeNode* invertTree(TreeNode* root) {
+    TreeNode* dfs(TreeNode* root) {
         if(root == nullptr) return root;
-        root->left = invertTree(root->left);
-        root->right = invertTree(root->right);
+        root->left = dfs(root->left);
+        root->right = dfs(root->right);
         swap(root->left, root->right);
         return root;
+    }
+    TreeNode* bfs(TreeNode* root){
+        if(root == nullptr) return nullptr;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* f = q.front();
+            q.pop();
+            swap(f->left, f->right);
+            if(f->left) q.push(f->left);
+            if(f->right) q.push(f->right);
+        }
+        return root;
+    }
+    TreeNode* invertTree(TreeNode* root) {
+        // return dfs(root);
+        return bfs(root);
     }
 };
 // @lc code=end
