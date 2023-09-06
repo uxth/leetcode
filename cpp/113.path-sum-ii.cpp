@@ -57,7 +57,7 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode* root, int sum, vector<int>& path, vector<vector<int>>& res)
+    void helper(TreeNode* root, int sum, vector<int>& path, vector<vector<int>>& res)
     {
         if(root == nullptr) return;
         if(root->left == nullptr && root->right == nullptr && root->val == sum)
@@ -69,15 +69,51 @@ public:
         }
 
         path.push_back(root->val);
-        dfs(root->left, sum-root->val, path, res);
-        dfs(root->right, sum-root->val, path, res);
+        helper(root->left, sum-root->val, path, res);
+        helper(root->right, sum-root->val, path, res);
         path.pop_back();
     }
-    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+    
+    vector<vector<int>> dfs(TreeNode* root, int sum) {
         vector<int> path;
         vector<vector<int>> res;
-        dfs(root, sum, path, res);
+        helper(root, sum, path, res);
         return res;
+    }
+    vector<vector<int>> bfs(TreeNode* root, int sum){
+        if(root == nullptr) return {};
+        unordered_map<TreeNode*, TreeNode*> parent;
+        parent[root] = nullptr;
+        queue<pair<TreeNode*, int>> q;
+        q.push({root, root->val});
+        vector<vector<int>> res;
+        while(!q.empty()){
+            auto [cur, value] = q.front();
+            q.pop();
+            if(cur->left == nullptr && cur->right == nullptr && value == sum){
+                vector<int> data{cur->val};
+                TreeNode* it = cur;
+                while(parent[it]){
+                    it = parent[it];
+                    data.push_back(it->val); 
+                }
+                reverse(begin(data), end(data));
+                res.push_back(data);
+            }
+            if(cur->left) {
+                parent[cur->left] = cur;
+                q.push({cur->left, value + cur->left->val});
+            }
+            if(cur->right){
+                parent[cur->right] = cur;
+                q.push({cur->right, value + cur->right->val});
+            }
+        }
+        return res;
+    }
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        // return dfs(root, sum);
+        return bfs(root, sum);
     }
 };
 // @lc code=end
