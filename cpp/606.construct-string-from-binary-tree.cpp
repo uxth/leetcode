@@ -76,10 +76,9 @@ public:
     {
         if(t == nullptr) return "";
         string res = to_string(t->val);
-        if(t->left)
+        if(t->left){
             res += "(" + tree2str(t->left) + ")";
-        else
-        {
+        }else{
             if(t->right) res+="()";
         }
 
