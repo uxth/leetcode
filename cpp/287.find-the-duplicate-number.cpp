@@ -57,10 +57,122 @@
 // @lc code=start
 class Solution {
 public:
-    int findDuplicate(vector<int>& nums) {
+    int hashSet(vector<int>& nums){
+        unordered_set<int> s;
+        for(int i : nums){
+            if(s.count(i)) return i;
+            s.insert(i);
+        }
+        return -1;
+    }
+    int hashMap(vector<int>& nums) {
         unordered_map<int,int> m;
         for(int i : nums)if(++m[i]>=2)return i;
         return -1;
+    }
+    int markingVisited(vector<int>& nums){
+        int n = nums.size();
+        for(int i : nums){
+            int idx = abs(i);
+            if(nums[idx] < 0) return idx;
+            nums[idx] = -nums[idx];
+        }
+        return -1;
+    }
+    int sorting(vector<int>& nums){
+        sort(begin(nums), end(nums));
+        for(int i=1; i<nums.size(); ++i){
+            if(nums[i] == nums[i-1]) return nums[i];
+        }
+        return -1;
+    }
+    int indexSort(vector<int>& nums){
+        int len = nums.size();
+        for (int i = 0; i < len; ) {
+            int n = nums[i];
+            if (n == i + 1) {
+                i++;
+            } else if (n == nums[n - 1]) {
+                return n;
+            } else {
+                nums[i] = nums[n - 1];
+                nums[n - 1] = n;
+            }
+        }
+        return -1;
+    }
+    int binarySearch(vector<int>& nums){
+        int len = nums.size();
+        int low = 1;
+        int high = len - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            int cnt = 0;
+            for (int i = 0; i < len; i++) {
+                if (nums[i] <= mid) {
+                    cnt++;
+                }
+            }
+
+            if (cnt <= mid) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+
+        return low;       
+    }
+    int bitMask(vector<int>& nums){
+        int n = nums.size();
+        int ans = 0;
+        int bit_max = 31;
+        while (((n - 1) >> bit_max) == 0) {
+            bit_max -= 1;
+        }
+
+        for (int bit = 0; bit <= bit_max; ++bit) {
+            int x = 0, y = 0;
+            for (int i = 0; i < n; ++i) {
+                if ((nums[i] & (1 << bit)) != 0) {
+                    x += 1;
+                }
+                if (i >= 1 && ((i & (1 << bit)) != 0)) {
+                    y += 1;
+                }
+            }
+            if (x > y) {
+                ans |= 1 << bit;
+            }
+        }
+
+        return ans;
+    }
+    int fastSlowPointers(vector<int>& nums){
+        int slow = 0;
+        int fast = 0;
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+
+        slow = 0;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        
+        return slow;
+    }
+    int findDuplicate(vector<int>& nums) {
+        // return hashMap(nums);
+        // return hashSet(nums);
+        // return markingVisited(nums);
+        // return sorting(nums);
+        // return indexSort(nums);
+        // return binarySearch(nums);
+        // return bitMask(nums);
+        return fastSlowPointers(nums);
     }
 };
 // @lc code=end
