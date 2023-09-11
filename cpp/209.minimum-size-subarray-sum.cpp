@@ -36,17 +36,17 @@
 class Solution {
 public:
     int minSubArrayLen(int s, vector<int>& nums) {
-        if (nums.size() == 0) return 0;
+        if (nums.empty()) return 0;
+        int n = nums.size();
         int left = 0; int right = 0;
         int sum = 0;
         int res = INT_MAX;
-        while (left < (int)nums.size()) {
+        while (left < n) {
             if (sum >= s) {
                 res = min(res, right - left);
                 sum -= nums[left++];
-            }
-            else {
-                if (right < (int)nums.size())
+            } else {
+                if (right < n)
                     sum += nums[right++];
                 else
                     sum -= nums[left++];
