@@ -65,7 +65,6 @@ public:
         {
             int mid = start + (end - start)/2;
             int sacount = calcsubarrays(nums, mid);
-            // cout << "start = " << start <<", end= " <<end <<endl;
             if(sacount <= m)
                 end = mid - 1;
             else
