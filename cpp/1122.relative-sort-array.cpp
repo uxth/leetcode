@@ -40,13 +40,34 @@
 // @lc code=start
 class Solution {
 public:
+    // vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+    //     int key[1001], idx = 0;
+    //     for (int i = 0; i < 1001; i++) key[i] = 1000+i;
+    //     for (int b : arr2) key[b] = idx++;
+    //     sort(arr1.begin(), arr1.end(), [key](int c, int d){
+    //         return key[c] < key[d];
+    //     });
+    //     return arr1;
+    // }
+
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
-        int key[1001], idx = 0;
-        for (int i = 0; i < 1001; i++) key[i] = 1000+i;
-        for (int b : arr2) key[b] = idx++;
-        sort(arr1.begin(), arr1.end(), [key](int c, int d){
-            return key[c] < key[d];
-        });
+        int count[1001] = {0}; // since numbers are from [0, 1000]
+        for (int& num : arr1) count[num]++;
+
+        int i = 0;
+        // To follow the same ordering of arr2
+        for (int& num : arr2) {
+            while (count[num]-- > 0)
+                arr1[i++] = num;
+        }
+
+        // For remaining elements that were not in arr2
+        for (int j = 0; j < 1001; j++) {
+            while (count[j]-- > 0) {
+                arr1[i++] = j;
+            }
+        }
+
         return arr1;
     }
 };
