@@ -64,23 +64,30 @@ public:
     // Adds a number into the data structure.
     void addNum(int num) {
         small.push(num);
-        large.push(-small.top());
+        large.push(small.top());
         small.pop();
         if (small.size() < large.size()) {
-            small.push(-large.top());
+            small.push(large.top());
             large.pop();
         }
     }
 
     // Returns the median of current data stream
     double findMedian() {
-        return small.size() > large.size() ? small.top() : 0.5 *(small.top() - large.top());
+        return small.size() > large.size() ? small.top() : 0.5 * (small.top() + large.top());
     }
 
 private:
-    priority_queue<long> small, large;
+    priority_queue<long> small;
+    priority_queue<long, vector<long>, greater<long>> large;
 };
 
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
 /**
  * Your MedianFinder object will be instantiated and called as such:
  * MedianFinder* obj = new MedianFinder();
