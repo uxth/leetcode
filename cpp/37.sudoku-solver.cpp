@@ -56,16 +56,16 @@
 class Solution {
 public:
     void solveSudoku(vector<vector<char>>& board) {
-        helper(board);
+        dfs(board);
     }
-    bool helper(vector<vector<char>>& board) {
+    bool dfs(vector<vector<char>>& board) {
         for (int i = 0; i < 9; ++i) {
             for (int j = 0; j < 9; ++j) {
                 if (board[i][j] != '.') continue;
                 for (char c = '1'; c <= '9'; ++c) {
                     if (!isValid(board, i, j, c)) continue;
                     board[i][j] = c;
-                    if (helper(board)) return true;
+                    if (dfs(board)) return true;
                     board[i][j] = '.';
                 }
                 return false;
