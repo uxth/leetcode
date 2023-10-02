@@ -8,8 +8,8 @@
 class Solution {
 public:
     int findGCD(vector<int>& nums) {
-        auto [mini, maxi] = minmax_element(begin(nums), end(nums));
-        return gcd(*mini, *maxi);
+        auto [i, j] = minmax_element(begin(nums), end(nums));
+        return gcd(*i, *j);
     }
 };
 // @lc code=end
