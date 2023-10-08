@@ -58,7 +58,25 @@
 class Solution {
 public:
     int shortestPathLength(vector<vector<int>>& graph) {
-        
+        int n = graph.size();
+        queue<pair<int,int>> q;
+        for(int i=0; i<n; ++i) q.push({1<<i, i});
+        int res = 0;
+        vector<vector<bool>> seen(n, vector<bool>(1<<n));
+        while(!q.empty()){
+            int size = q.size();
+            while(size--){
+                auto [mask, start] = q.front();
+                q.pop();
+                if(mask == (1<<n) - 1) return res;
+                if(seen[start][mask]) continue;
+                seen[start][mask] = true;
+                for(int next : graph[start])
+                    q.push({mask|1<<next, next});
+            }
+            res++;
+        }
+        return -1;
     }
 };
 // @lc code=end
