@@ -82,19 +82,33 @@
 // @lc code=start
 class Solution {
 public:
+    // int minOperations(vector<int>& nums) {
+    //     int res = 0;
+    //     bitset<100000> mask;
+    //     for(int i=0;i<nums.size(); ++i) mask.set(i, nums[i]==0);
+    //     while(mask.count() != nums.size()){
+    //         int lastbit = 0;
+    //         for(int i=0;i<nums.size(); ++i){
+    //             if(nums[i] % 2) lastbit++;
+    //             nums[i] /= 2;
+    //             mask.set(i, nums[i]==0);
+    //         }
+    //         res += 1 + lastbit;
+    //     }
+    //     return res == 0 ? 0 : res-1;
+    // }
     int minOperations(vector<int>& nums) {
-        int res = 0;
-        while (!all_of(nums.begin(), nums.end(), [](int i){return i==0;}))
-        {
-            int lastbit = 0;
-            for(int i=0;i<nums.size(); ++i)
-            {
-                if(nums[i] % 2) lastbit++;
-                nums[i] /= 2;
+        int res = 0, maxi = 1;
+        for (int a : nums) {
+            int count = 0;
+            while (a > 0) {
+                res += a & 1;
+                count++;
+                a >>= 1;
             }
-            res += 1 + lastbit;
+            maxi = max(maxi, count);
         }
-        return res == 0 ? 0 : res-1;
+        return res + maxi - 1;
     }
 
     // int minOperations(vector<int>& nums) {
