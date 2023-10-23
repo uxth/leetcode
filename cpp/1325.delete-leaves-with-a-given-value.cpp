@@ -93,28 +93,19 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode* root, int target)
-    {
-        if(root == nullptr) return;
-        dfs(root->left, target);
-        dfs(root->right, target);
-
-        if(root->left && root->left->val == target && !root->left->left && !root->left->right)
-        {
-            delete root->left; root->left = nullptr;
-        }
-        if(root->right && root->right->val == target && !root->right->left && !root->right->right)
-        {
-            delete root->right; root->right = nullptr;
-        }
-    }
     TreeNode* removeLeafNodes(TreeNode* root, int target) {
-        dfs(root, target);
-        if(root && !root->left && !root->right && root->val == target)
-        {
-            return nullptr;
-        }
+        postorder(root,target);
         return root;
+    }
+
+    void postorder(TreeNode* &root,int target)
+    {
+        if(!root)return;
+        postorder(root->left,target);
+        postorder(root->right,target);
+        if(root->val==target && root->left==NULL && root->right==NULL){
+            root=NULL;
+        }
     }
 };
 // @lc code=end
