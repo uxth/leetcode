@@ -50,7 +50,7 @@ Constraints:
 
 class Solution {
 public:
-    int maximumJumps(vector<int>& nums, int target){
+    int dp(vector<int>& nums, int target){
         int n = nums.size();
         vector<int> dp(n, -1);
         dp[0] = 0;
@@ -60,5 +60,9 @@ public:
             }
         }
         return dp.back();
+    }
+
+    int maximumJumps(vector<int>& nums, int target){
+        return dp(nums, target);
     }
 }
