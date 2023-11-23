@@ -55,7 +55,7 @@ public:
             else
             {
                 if(tolower(s[low++]) != tolower(s[high--]))
-                return false;
+                    return false;
             }
         }
         return true;
