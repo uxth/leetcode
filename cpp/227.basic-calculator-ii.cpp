@@ -56,7 +56,7 @@ public:
         long long total = 0, term = 0, n;
         char op;
         while (in >> op) {
-            if (op == '+' or op == '-') {
+            if (op == '+' || op == '-') {
                 total += term;
                 in >> term;
                 term *= 44 - op;
