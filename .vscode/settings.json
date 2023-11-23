@@ -47,5 +47,6 @@
     "[cpp]": {
         "editor.defaultFormatter": "ms-vscode.cpptools"
     },
+    "markdown.preview.fontSize": 18,
 
 }
