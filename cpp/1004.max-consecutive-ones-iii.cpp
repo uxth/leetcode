@@ -59,13 +59,25 @@
 // @lc code=start
 class Solution {
 public:
+    // int longestOnes(vector<int>& A, int K) {
+    //     int i = 0, j;
+    //     for (j = 0; j < A.size(); ++j) {
+    //         if (A[j] == 0) K--;
+    //         if (K < 0 && A[i++] == 0) K++;
+    //     }
+    //     return j - i;
+    // }
     int longestOnes(vector<int>& A, int K) {
-        int i = 0, j;
-        for (j = 0; j < A.size(); ++j) {
-            if (A[j] == 0) K--;
-            if (K < 0 && A[i++] == 0) K++;
+        int count = 0;
+        int res  = 0;
+        for(int i=0, j=0; i<A.size(); ++i){
+            if(A[i] == 0) K--;
+            while(K<0){
+                if(A[j++]==0)K++;
+            }
+            res = max(res, i-j+1);
         }
-        return j - i;
+        return res;
     }
 };
 // @lc code=end
