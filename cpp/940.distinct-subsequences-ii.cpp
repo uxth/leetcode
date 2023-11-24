@@ -73,7 +73,7 @@ public:
             }
             map[s[i]] = i;
         }
-        return (dp[size]+mod-1)%mod ;
+        return (dp[size]+mod-1)%mod;
     }
 
 };
