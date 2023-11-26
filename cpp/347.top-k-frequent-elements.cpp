@@ -46,14 +46,31 @@
 // @lc code=start
 class Solution {
 public:
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        unordered_map<int,int> m;
-        for(int n : nums) ++m[n];
-        vector<pair<int,int>> data(m.begin(), m.end());
-        sort(data.begin(), data.end(), [](auto& a, auto& b){return a.second > b.second;});
-        vector<int> res;
-        for(int i=0; i<k && i<data.size(); ++i) res.push_back(data[i].first);
-        return res;
+    // vector<int> topKFrequent(vector<int>& nums, int k) {
+    //     unordered_map<int,int> m;
+    //     for(int n : nums) ++m[n];
+    //     vector<pair<int,int>> data(m.begin(), m.end());
+    //     sort(data.begin(), data.end(), [](auto& a, auto& b){return a.second > b.second;});
+    //     vector<int> res;
+    //     for(int i=0; i<k && i<data.size(); ++i) res.push_back(data[i].first);
+    //     return res;
+    // }
+
+    vector<int> topKFrequent(vector<int> &nums, int k) {
+      int size = nums.size();
+      unordered_map<int, int> numMap;
+      for (int n : nums) 
+        ++numMap[n];
+      vector<vector<int>> freqGroups(size + 1);
+      for (auto pair : numMap) 
+        freqGroups[pair.second].push_back(pair.first);
+      vector<int> result;
+      for (int i = size; i >= 0; --i)
+        for (int num : freqGroups[i])
+          if (result.size() < k)
+            result.push_back(num);
+
+      return result;
     }
 };
 // @lc code=end
