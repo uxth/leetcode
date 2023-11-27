@@ -49,15 +49,16 @@ public:
             for(int j=i+1; j<nums.size(); ++j)
             {
                 if(j>i+1 && nums[j]==nums[j-1]) continue;
-                int left = j+1; int right = nums.size()-1; 
+                int left = j+1; int right = nums.size()-1;
+                long long remain = (long long)target - (long long)nums[i] - (long long)nums[j];
                 while(left < right)
                 {
                     while(left < right && left>j+1 && nums[left]==nums[left-1]) left++;
                     while(left < right && right < nums.size()-1 && nums[right] == nums[right+1]) right--;
                     if(left>=right) break;
-                    int sum = nums[i]+nums[j]+nums[left]+nums[right];
-                    if(sum == target) res.push_back({nums[i], nums[j], nums[left++], nums[right--]});
-                    else if(sum>target) --right;
+                    long long sum = nums[left]+nums[right];
+                    if(sum == remain) res.push_back({nums[i], nums[j], nums[left++], nums[right--]});
+                    else if(sum>remain) --right;
                     else ++left;
                 }
             }
@@ -68,3 +69,7 @@ public:
 // @lc code=end
 // [-3,-2,-1,0,0,1,2,3]\n0
 // [-1,2,2,-5,0,-1,4]\n3
+/*
+[1000000000,1000000000,1000000000,1000000000]\n0
+
+*/ 
