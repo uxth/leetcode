@@ -42,7 +42,7 @@
 // @lc code=start
 class Solution {
 public:
-    string longestCommonPrefix(vector<string>& strs) {
+    string lcp(vector<string>& strs) {
         if(strs.empty()) return "";
         string res = strs[0];
         for(int i=1; i<strs.size(); ++i)
@@ -52,6 +52,9 @@ public:
             res = res.substr(0, j);
         }
         return res;
+    }
+    string longestCommonPrefix(vector<string>& strs) {
+        return lcp(strs);
     }
 };
 // @lc code=end
