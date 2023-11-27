@@ -48,11 +48,20 @@ For dp[i], the method is actually the same as the above method. It is still nece
 // Ref: https://leetcode.com/problems/4-keys-keyboard/solution/
 class Solution {
 public:
+    // int maxA(int N) {
+    //     vector<int> dp(N + 1);
+    //     for (int i = 1; i <= N; ++i) {
+    //         dp[i] = dp[i - 1] + 1;
+    //         for (int j = 2; j < i - 1; ++j) dp[i] = max(dp[i], dp[i - j - 1] * j);
+    //     }
+    //     return dp[N];
+    // }
+
     int maxA(int N) {
         vector<int> dp(N + 1);
         for (int i = 1; i <= N; ++i) {
-            dp[i] = dp[i - 1] + 1;
-            for (int j = 2; j < i - 1; ++j) dp[i] = max(dp[i], dp[i - j - 1] * j);
+            dp[i] = i;
+            for (int j = 1; j < i - 2; ++j) dp[i] = max(dp[i], dp[j] + (i-j-2)*dp[j]);
         }
         return dp[N];
     }
