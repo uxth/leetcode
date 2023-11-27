@@ -107,15 +107,30 @@ public:
     //     return result;
     // }
 
+    // vector<string> summaryRanges(vector<int>& nums) {
+    //     int left = 0;
+    //     vector<string> res;
+    //     while (left < nums.size())
+    //     {
+    //         int length = 1;
+    //         while (left + length < nums.size() && (long)nums[left + length] - nums[left] == length) length++;
+    //         res.push_back(length == 1 ? to_string(nums[left]) : to_string(nums[left]) + "->" + to_string(nums[left + length - 1]));
+    //         left += length;
+    //     }
+    //     return res;
+    // }
+
     vector<string> summaryRanges(vector<int>& nums) {
-        int left = 0;
         vector<string> res;
-        while (left < nums.size())
-        {
-            int length = 1;
-            while (left + length < nums.size() && (long)nums[left + length] - nums[left] == length) length++;
-            res.push_back(length == 1 ? to_string(nums[left]) : to_string(nums[left]) + "->" + to_string(nums[left + length - 1]));
-            left += length;
+        if(nums.empty()) return res;
+        for(int i=0; i<nums.size(); ++i){
+            int num = nums[i];
+            while(i<nums.size()-1 && nums[i]+1 == nums[i+1]) i++;
+            if(num != nums[i]){
+                res.push_back(to_string(num) + "->" + to_string(nums[i]));
+            }else {
+                res.push_back(to_string(num));
+            }
         }
         return res;
     }
