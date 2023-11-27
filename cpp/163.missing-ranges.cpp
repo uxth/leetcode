@@ -60,4 +60,25 @@ public:
         if (i <= upper) ans.push_back(formatRange(i, upper));
         return ans;
     }
+
+    vector<string> find(vector<int>& A, int lower, int upper){
+        vector<string> res;
+        long long l = (long long)lower;
+        long long u = (long long)upper;
+        for(int num : A) {
+            if(l == num){
+                l++;
+            }else if(l < num){
+                if(l + 1 == num){
+                    res.push_back(to_string(l));
+                }else{
+                    res.push_back(to_string(l) + "->" + to_string(num - 1));
+                }
+                l = num + 1;
+            }
+        }
+        if(l == u) res.push_back(to_string(l));
+        else res.push_back(to_string(l) + "->" + to_string(u));
+        return res;
+    }
 };
