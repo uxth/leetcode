@@ -62,7 +62,7 @@ public:
         }
         return dp[n][K];
     }
-    double largestSumOfAverages(vector<int>& A, int K)
+    double dfs(vector<int>& A, int K)
     {
         int n = A.size();
         if(n == 0) return 0;
@@ -75,6 +75,37 @@ public:
             dp[i+1][1] = sum / (i+1);
         }
         return dfs(A, K, n, dp);
+    }
+    double largestSumOfAverages(vector<int>& A, int K){
+        // return dfs(A, K);
+        return dp(A, K);
+    }
+
+
+    double dp(vector<int>& nums, int K) {
+        int n = nums.size();
+        double presum[n];
+        vector<vector<double>> dp(n, vector<double>(K+1, 0));
+        
+        presum[0] = nums[0];
+        for(int i=1;i<n;i++) {
+            presum[i] = presum[i-1] + nums[i];
+        }
+
+        for(int i=0;i<n;i++) {
+            dp[i][0] = 0;
+            dp[i][1] = presum[i]/(i+1);
+        }
+
+        for(int i=1;i<n;i++) {
+            for(int k=2;k<=min(i+1,K);k++) {
+                for(int j=i;j>=k-1;j--) {
+                    dp[i][k] = max(dp[i][k], dp[j-1][k-1] + (presum[i]-presum[j-1])/(i-j+1));
+                }
+            }
+        }
+
+        return dp[n-1][K];
     }
 
 };
