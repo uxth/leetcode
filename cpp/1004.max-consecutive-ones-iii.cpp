@@ -68,7 +68,7 @@ public:
     //     return j - i;
     // }
     int longestOnes(vector<int>& A, int K) {
-        int count = 0;
+
         int res  = 0;
         for(int i=0, j=0; i<A.size(); ++i){
             if(A[i] == 0) K--;
