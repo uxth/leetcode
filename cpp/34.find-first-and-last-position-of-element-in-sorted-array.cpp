@@ -73,12 +73,24 @@ public:
         }
         return left;
     }
-    vector<int> searchRange(vector<int>& nums, int target) {
+    vector<int> searchLeftAndRight(vector<int>& nums, int target) {
         if(nums.empty() || nums.back() < target || target < nums.front()) return {-1,-1};
         int left = searchLeft(nums, target);
         int right = searchRight(nums, target);
         if(nums[left] == nums[right] && nums[left] == target) return {left, right};
         return {-1,-1};
+    }
+
+    vector<int> searchRange(vector<int>& nums, int target) {
+        // return searchLeftAndRight(nums, target);
+        return searchBuiltIn(nums, target);
+    }
+
+    vector<int> searchBuiltIn(vector<int>& nums, int target) {
+        auto left = lower_bound(begin(nums), end(nums), target);
+        auto right = upper_bound(begin(nums), end(nums), target);
+        if(left == right) return {-1, -1};
+        return {static_cast<int>(left-begin(nums)), static_cast<int>(right-begin(nums)-1)};
     }
 };
 // @lc code=end
