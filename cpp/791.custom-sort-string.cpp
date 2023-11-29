@@ -51,7 +51,7 @@
 // @lc code=start
 class Solution {
 public:
-    string customSortString(string S, string T) {
+    string useMap(string& S, string& T) {
         unordered_map<char,int> m;
         for(char c : T) m[c]++;
         string res;
@@ -63,6 +63,22 @@ public:
         for(auto& i : m) res += string(i.second, i.first);
         return res;
     }
+
+    string useSort(string& S, string& T){
+        unordered_map<char,int> ind;
+        for(int i=0; i<S.size(); ++i)ind[S[i]] = i;
+        sort(begin(T), end(T), [&](char a, char b){
+            int aInd = ind.count(a) ? ind[a] : INT_MAX;
+            int bInd = ind.count(b) ? ind[b] : INT_MAX;
+            return aInd < bInd;
+        });
+        return T;
+    }
+    string customSortString(string S, string T) {
+        return useMap(S, T);
+        // return useSort(S, T); // sort is slower since O(nlog(n))
+    }
+
 };
 // @lc code=end
 
