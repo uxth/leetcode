@@ -67,7 +67,7 @@ public:
             {
                 res[i] = v[j].first;
                 if(--v[j].second == 0) j++;
-            
+            }
         }
         return res;
     }
