@@ -84,6 +84,7 @@ public:
     vector<int> searchRange(vector<int>& nums, int target) {
         // return searchLeftAndRight(nums, target);
         return searchBuiltIn(nums, target);
+        // return searchLowerAndUpperBound(nums, target);
     }
 
     vector<int> searchBuiltIn(vector<int>& nums, int target) {
@@ -91,6 +92,35 @@ public:
         auto right = upper_bound(begin(nums), end(nums), target);
         if(left == right) return {-1, -1};
         return {static_cast<int>(left-begin(nums)), static_cast<int>(right-begin(nums)-1)};
+    }
+
+    vector<int> searchLowerAndUpperBound(vector<int>& nums, int target){
+        if(nums.empty()) return {-1, -1};
+        int left = my_lower_bound(nums, target);
+        if(nums[left] != target) return {-1, -1};
+        int right = my_upper_bound(nums, target);
+        if(nums[right] != target) right--;
+        return {left, right};
+        
+    }
+
+    int my_lower_bound(vector<int>& nums, int target){
+        int left = 0, right = nums.size()-1;
+        while(left < right){
+            int mid = left + (right - left) / 2;
+            if(nums[mid] < target) left = mid + 1;
+            else right = mid;
+        }
+        return left;
+    }
+    int my_upper_bound(vector<int>& nums, int target){
+        int left = 0, right = nums.size() - 1;
+        while(left < right){
+            int mid = left + (right - left) / 2;
+            if(nums[mid] <= target) left = mid + 1;
+            else right = mid;
+        }
+        return left;
     }
 };
 // @lc code=end
