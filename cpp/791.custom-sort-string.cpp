@@ -52,15 +52,19 @@
 class Solution {
 public:
     string useMap(string& S, string& T) {
-        unordered_map<char,int> m;
+        vector<int> m(256, 0);
+        // unordered_map<char,int> m;
         for(char c : T) m[c]++;
         string res;
         for(char c : S)
         {
-            res += m.count(c) ? string(m[c], c) : "";
-            m.erase(c);
+            // res += m.count(c) ? string(m[c], c) : "";
+            // m.erase(c);
+            res += string(m[c], c);
+            m[c] = 0;
         }
-        for(auto& i : m) res += string(i.second, i.first);
+        // for(auto& i : m) res += string(i.second, i.first);
+        for(char i = 'a'; i<='z'; ++i) res+=string(m[i], i);
         return res;
     }
 
