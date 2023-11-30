@@ -102,8 +102,8 @@ public:
         return res;
     }
     vector<string> removeInvalidParentheses(string s) {
-        // return dfs(s);
-        return bfs(s);
+        return dfs(s);
+        // return bfs(s);
     }
 };
 // @lc code=end
