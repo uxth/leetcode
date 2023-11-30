@@ -56,8 +56,8 @@ public:
         return res;
     }
     void helper(string s, int start, int cnt1, int cnt2, vector<string>& res) {
-        if (cnt1 == 0 && cnt2 == 0) {
-            if (isValid(s)) res.push_back(s);
+        if (cnt1 == 0 && cnt2 == 0 && isValid(s)) {
+            res.push_back(s);
             return;
         }
         for (int i = start; i < s.size(); ++i) {
