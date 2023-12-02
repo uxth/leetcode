@@ -45,7 +45,7 @@
 // @lc code=start
 class Solution {
 public:
-    void dfs(unordered_map<int, vector<int>>& g, int pos, int n, vector<int>& path, vector<vector<int>>& res)
+    void helper(vector<vector<int>>& g, int pos, int n, vector<int>& path, vector<vector<int>>& res)
     {
         if(pos == n)
         {
@@ -58,19 +58,41 @@ public:
         path.push_back(pos);
         for(int next : g[pos])
         {
-            dfs(g, next, n, path, res);
+            helper(g, next, n, path, res);
         }
         path.pop_back();
     }
-    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
-        unordered_map<int, vector<int>> g;
+    vector<vector<int>> dfs(vector<vector<int>>& graph) {
         int n = graph.size();
-        for(int i=0; i<graph.size(); ++i) for(int j : graph[i]) g[i].push_back(j);
         vector<int> path;
         vector<vector<int>> res;
-        dfs(g, 0, n-1, path, res);
+        helper(graph, 0, n-1, path, res);
         return res;
     }
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph){
+        // return dfs(graph);
+        return bfs(graph);
+    }
+
+    vector<vector<int>> bfs(vector<vector<int>>& graph){
+        
+        int n = graph.size();
+        vector<vector<int>> res;
+        queue<vector<int>> q;
+        q.push({0});
+        while(!q.empty()){
+            auto f = q.front();
+            q.pop();
+            if(f.back() == n-1) res.push_back(f);
+            for(int node : graph[f.back()]){
+                vector<int> next = f;
+                next.push_back(node);
+                q.push(next); 
+            }
+        }
+        return res;
+    }
+
 };
 // @lc code=end
 
