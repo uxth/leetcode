@@ -61,13 +61,17 @@
 // @lc code=start
 class Solution {
 public:
-    bool divideArray(vector<int>& nums) {
+    bool useMap(vector<int>& nums) {
         unordered_map<int,int> m;
         for(int i : nums) ++m[i];
         for(auto& [k,v] : m){
             if(v%2) return false;
         }
         return true;
+    }
+    bool divideArray(vector<int>& nums) {
+        return useMap(nums);
+
     }
 };
 // @lc code=end
