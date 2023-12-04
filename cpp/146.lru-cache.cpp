@@ -77,8 +77,7 @@ public:
     void put(int key, int value) {
         if(mymap.find(key) != mymap.end()){
             refreshPosition(key, value);
-        }
-        else{
+        }else{
             cache.push_front(make_pair(key,value));
             mymap[key] = cache.begin();
             if(mymap.size() > cap){
