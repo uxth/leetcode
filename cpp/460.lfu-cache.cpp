@@ -39,7 +39,7 @@
  * Example:
  * 
  * 
- * LFUCache cache = new LFUCache( 2 /* capacity */ );
+ * LFUCache cache = new LFUCache( 2 );
  * 
  * cache.put(1, 1);
  * cache.put(2, 2);
@@ -93,7 +93,7 @@ public:
 
 private:
     int cap, minFreq;
-    unordered_map<int, pair<int, int>> m;
+    unordered_map<int, pair<int, int>> m; // {key,{value, frequency}}
     unordered_map<int, list<int>> freq;
     unordered_map<int, list<int>::iterator> iter;
 };
