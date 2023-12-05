@@ -42,20 +42,23 @@
  * 
  */
 
+// OJ: https://leetcode.com/problems/maximum-swap/
+// Time: O(N)
+// Space: O(1)
 // @lc code=start
 class Solution {
 public:
     int maximumSwap(int num) {
-        string str = to_string(num);
-        vector<int> buckets(10, 0);
-        for (int i = 0; i < str.size(); ++i) {
-            buckets[str[i] - '0'] = i;
+        string digits = to_string(num), memo(digits.size(), '\0');
+        int maxIndex = digits.size() - 1;
+        for (int i = digits.size() - 1; i >= 0; --i) {
+            if (digits[i] > digits[maxIndex]) maxIndex = i;
+            memo[i] = maxIndex;
         }
-        for (int i = 0; i < str.size(); ++i) {
-            for (int k = 9; k > str[i] - '0'; --k) {
-                if (buckets[k] <= i) continue;
-                swap(str[i], str[buckets[k]]);
-                return stoi(str);
+        for (int i = 0; i < digits.size(); ++i) {
+            if (memo[i] > i && digits[i] != digits[memo[i]]) {
+                swap(digits[i], digits[memo[i]]);
+                return stoi(digits);
             }
         }
         return num;
