@@ -35,24 +35,21 @@
 // @lc code=start
 class Solution {
 public:
-    int minSubArrayLen(int s, vector<int>& nums) {
-        if (nums.empty()) return 0;
-        int n = nums.size();
-        int left = 0; int right = 0;
-        int sum = 0;
+    int slidingWindow(int s, vector<int>& nums){
         int res = INT_MAX;
-        while (left < n) {
-            if (sum >= s) {
-                res = min(res, right - left);
+        int left = 0;
+        int sum = 0;
+        for(int i=0; i<nums.size(); ++i){
+            sum += nums[i];
+            while(left<=i && sum>=s){
+                res = min(res, i-left+1);
                 sum -= nums[left++];
-            } else {
-                if (right < n)
-                    sum += nums[right++];
-                else
-                    sum -= nums[left++];
             }
         }
         return res == INT_MAX ? 0 : res;
+    }
+    int minSubArrayLen(int s, vector<int>& nums) {
+        return slidingWindow(s, nums);
     }
 };
 // @lc code=end
