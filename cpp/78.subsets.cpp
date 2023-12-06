@@ -39,7 +39,7 @@
 // @lc code=start
 class Solution {
 public:
-    vector<vector<int>> subsets(vector<int>& nums) {
+    vector<vector<int>> useLoop(vector<int>& nums) {
         vector<vector<int>> res{{}};
         for(int n : nums)
         {
@@ -52,6 +52,22 @@ public:
             }
         }
         return res;
+    }
+    vector<vector<int>> useBits(vector<int>& nums){
+        vector<vector<int>> res;
+        int n = nums.size();
+        for(int i=0; i<(1<<n); ++i){
+            vector<int> data;
+            for(int j=0; j<n; ++j){
+                if(i & (1<<j)) data.push_back(nums[j]);
+            }
+            res.push_back(data);
+        }
+        return res;
+    }
+    vector<vector<int>> subsets(vector<int>& nums){
+        // return useLoop(nums);
+        return useBits(nums);
     }
 };
 // @lc code=end
