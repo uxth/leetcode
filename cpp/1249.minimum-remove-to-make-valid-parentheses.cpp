@@ -71,7 +71,7 @@
 // @lc code=start
 class Solution {
 public:
-    string minRemoveToMakeValid(string s) {
+    string useScan(string& s) {
         int i = s.size();
         int balance = 0;
         for (int j = s.size() - 1; j >= 0; j--) {
@@ -95,7 +95,26 @@ public:
         s.erase(len);
         return s;
     }
-
+    string useStack(string& s) {
+        stack<int> st;
+        for(int i=0; i<s.size(); ++i){
+            if(s[i] == '(') st.push(i);
+            else if(s[i] == ')'){
+                if(st.empty()) s[i] = '*';
+                else st.pop();
+            }
+        }
+        while(!st.empty()){
+            s[st.top()] = '*';
+            st.pop();
+        }
+        s.erase(remove(begin(s), end(s), '*'), end(s));
+        return s;
+    }
+    string minRemoveToMakeValid(string s) {
+        // return useScan(s);
+        return useStack(s);
+    }
 };
 // @lc code=end
 
