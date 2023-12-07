@@ -73,29 +73,29 @@
 class Solution {
 public:
     int shortestPath(vector<vector<int>>& grid, int k) {
-        int m = grid.size();
-        int n = grid[0].size();
-        vector<vector<vector<int>>> dp(k+1, vector<vector<int>>(m, vector<int>(n)));
-        dp[0][0][0] = grid[0][0] ? -1 : 0;
-        for(int i=1; i<m; ++i) dp[0][i][0] = grid[i][0] ? -1 : dp[0][i-1][0]+1;
-        for(int j=1; j<n; ++j) dp[0][0][j] = grid[0][j] ? -1 : dp[0][0][j-1]+1;
-        for(int i=1; i<m; ++i) for(int j=1; j<n; ++j) dp[0][i][j] = grid[i][j] ? -1 : min(dp[0][i-1][j], dp[0][i][j-1]) + 1;
-
-        for(int l=1; l<=k; ++l)
-        {
-            for(int i=1; i<m; ++i)
-            {
-                if(grid[i][0])
-                {
-                    dp[l][i][0] = l>0? dp[l-1][i-1][0] + 1 : grid[i-1]
+        int dirs[] = {0, 1, 0, -1, 0};
+        int rows = grid.size(), cols = grid[0].size();
+        if(k >= rows + cols - 2) return rows + cols - 2;
+        vector<vector<vector<bool>>> visited(vector<vector<vector<bool>>>(rows, vector<vector<bool>>(cols, vector<bool> (k + 1))));
+        queue<vector<int>> q;
+        q.push({0, 0, k, 0});
+        visited[0][0][k] = true;
+        while(!q.empty()){
+            vector<int> top = q.front();
+            q.pop();
+            int r = top[0], c = top[1], currK = top[2], dist = top[3];
+            if(r == rows - 1 && c == cols - 1) return dist;
+            for(int i = 0; i < 4; ++i){
+                int nr = r + dirs[i], nc = c + dirs[i + 1];
+                if(nr < 0 || nr == rows || nc < 0 || nc == cols) continue;
+                int newK = currK - grid[nr][nc];
+                while(newK >= 0 && !visited[nr][nc][newK]){
+                    visited[nr][nc][newK] = true;
+                    q.push({nr, nc, newK, dist + 1});
                 }
-                else
-                {
-                    
-                }
-                
             }
         }
+        return -1;
     }
 };
 // @lc code=end
