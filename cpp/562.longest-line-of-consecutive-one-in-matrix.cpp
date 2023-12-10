@@ -35,7 +35,8 @@ public:
                     b[i][j] = b[i][j - 1] + 1;
                     c[i][j] = c[i - 1][j - 1] + 1;
                     d[i][j] = d[i - 1][j + 1] + 1;
-                    ans = max(ans, max(a[i][j], max(b[i][j], max(c[i][j], d[i][j]))));
+                    // ans = max(ans, max(a[i][j], max(b[i][j], max(c[i][j], d[i][j]))));
+                    ans = max({ans, a[i][j], b[i][j], c[i][j], d[i][j]});
                 }
             }
         }
