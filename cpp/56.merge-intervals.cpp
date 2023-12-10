@@ -54,8 +54,7 @@ public:
         {
             if(intervals[i][0] <= res.back()[1])
             {
-                if(res[res.size()-1][1] < intervals[i][1])
-                    res[res.size()-1][1] = intervals[i][1];
+                res[res.size()-1][1] =  max(intervals[i][1], res[res.size()-1][1]);
             }
             else
             {
